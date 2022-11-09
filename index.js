@@ -20,6 +20,13 @@ async function run() {
     try {
         const servicesCollection = client.db('photography').collection('services');
 
+        app.get('/', async (req, res) => {
+            const query = {}
+            const cursor = servicesCollection.find(query);
+            const latestWork = await cursor.limit(3).toArray();
+            res.send(latestWork);
+        })
+
         app.get('/services', async (req, res) => {
             const query = {}
             const cursor = servicesCollection.find(query);
